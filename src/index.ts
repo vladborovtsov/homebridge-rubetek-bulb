@@ -24,6 +24,7 @@ let hap: HAP;
  */
 export = (api: API) => {
   hap = api.hap;
+  
   api.registerAccessory("RubetekBulb", RubetekBulb);
 };
 
@@ -57,7 +58,7 @@ class RubetekBulb implements AccessoryPlugin {
     }).json();
 
     const traits = houses
-      .find(({ id }) => id === this.houseID)
+      .find(({ id }) => id.toString(10) === this.houseID)
       .devices.find(({ id }) => id === this.deviceID).currentState;
 
     const [hue, saturation] = rgbToHsv(
