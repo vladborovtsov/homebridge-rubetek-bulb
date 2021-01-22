@@ -1,16 +1,13 @@
 {
   "private": true,
-  "displayName": "Plugin Name",
-  "name": "homebridge-plugin-name",
+  "displayName": "Rubetek Bulb",
+  "name": "homebridge-rubetek-bulb",
   "version": "1.0.0",
-  "description": "A short description about what your plugin does.",
-  "license": "Apache-2.0",
+  "description": "Homebridge plugin for Rubetek RGB Lighbulb",
+  "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git://github.com/USERNAME/GITHUB_PROJECT_NAME.git"
-  },
-  "bugs": {
-    "url": "https://github.com/USERNAME/GITHUB_PROJECT_NAME/issues"
+    "url": "git://github.com/gbougakov/homebridge-rubetek-bulb.git"
   },
   "engines": {
     "node": ">=10.17.0",
@@ -26,7 +23,10 @@
   "keywords": [
     "homebridge-plugin"
   ],
-  "dependencies": {},
+  "dependencies": {
+    "date-fns": "^2.16.1",
+    "got": "^11.8.1"
+  },
   "devDependencies": {
     "@types/node": "^14.14.6",
     "@typescript-eslint/eslint-plugin": "^4.6.1",
