@@ -24,6 +24,7 @@
     "homebridge-plugin"
   ],
   "dependencies": {
+    "color-convert": "^2.0.1",
     "date-fns": "^2.16.1",
     "got": "^11.8.1",
     "lodash": "^4.17.20",

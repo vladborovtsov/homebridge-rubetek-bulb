@@ -12,7 +12,7 @@ import {
 } from "homebridge";
 
 import subSeconds from "date-fns/subSeconds";
-import debounce from "lodash.debounce";
+import convert from "color-convert";
 import { hsvToRgb, rgbToHsv } from "./hsvUtils";
 
 import got from "got";
@@ -63,7 +63,7 @@ class RubetekBulb implements AccessoryPlugin {
       .find(({ id }) => id.toString(10) === this.houseID)
       .devices.find(({ id }) => id === this.deviceID).currentState;
 
-    const [hue, saturation] = rgbToHsv(
+    const [hue, saturation] = convert.rgb.hsl(
       traits["lamp:R[0]"] || 0,
       traits["lamp:G[0]"] || 0,
       traits["lamp:B[0]"] || 0
@@ -95,7 +95,7 @@ class RubetekBulb implements AccessoryPlugin {
     this.timerId = setTimeout(async () => {
       this.timerId = undefined;
 
-      const [r, g, b] = hsvToRgb(this.hCache, this.sCache, 0.5);
+      const [r, g, b] = convert.hsl.rgb(this.hCache, this.sCache, 0.5);
 
       this.log.debug(JSON.stringify({ r, g, b }));
 
