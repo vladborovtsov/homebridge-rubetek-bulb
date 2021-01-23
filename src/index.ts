@@ -11,7 +11,7 @@ import {
   Service,
 } from "homebridge";
 
-import subMinutes from "date-fns/subMinutes";
+import subSeconds from "date-fns/subSeconds";
 import debounce from "lodash.debounce";
 import { hsvToRgb, rgbToHsv } from "./hsvUtils";
 
@@ -50,7 +50,7 @@ class RubetekBulb implements AccessoryPlugin {
   private readonly informationService: Service;
 
   isCacheExpired(): boolean {
-    return subMinutes(new Date(), 5) > this.cacheLastUpdated;
+    return subSeconds(new Date(), 15) > this.cacheLastUpdated;
   }
 
   async refreshCache(): Promise<void> {
