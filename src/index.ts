@@ -12,7 +12,7 @@ import {
 } from "homebridge";
 
 import subMinutes from "date-fns/subMinutes";
-
+import debounce from "lodash.debounce";
 import { hsvToRgb, rgbToHsv } from "./hsvUtils";
 
 import got from "got";
@@ -86,6 +86,18 @@ class RubetekBulb implements AccessoryPlugin {
     );
   }
 
+  async updateLight() {
+    const [r, g, b] = hsvToRgb(this.hCache, this.sCache, 0.5);
+
+    this.log.debug(JSON.stringify({ r, g, b }));
+
+    await this.setTraits({
+      "lamp:R[0]": Math.floor(r),
+      "lamp:G[0]": Math.floor(g),
+      "lamp:B[0]": Math.floor(b),
+    });
+  }
+
   constructor(log: Logging, config: AccessoryConfig, api: API) {
     this.log = log;
     this.name = config.name;
@@ -141,15 +153,7 @@ class RubetekBulb implements AccessoryPlugin {
         ) => {
           this.hCache = (value as number) / 360;
 
-          const [r, g, b] = hsvToRgb(this.hCache, this.sCache, 0.5);
-
-          log.debug(JSON.stringify({ r, g, b }));
-
-          await this.setTraits({
-            "lamp:R[0]": Math.floor(r),
-            "lamp:G[0]": Math.floor(g),
-            "lamp:B[0]": Math.floor(b),
-          });
+          await debounce(this.updateLight, 300);
 
           callback();
         }
@@ -174,15 +178,7 @@ class RubetekBulb implements AccessoryPlugin {
         ) => {
           this.sCache = (value as number) / 100;
 
-          const [r, g, b] = hsvToRgb(this.hCache, this.sCache, 0.5);
-
-          log.debug(JSON.stringify({ r, g, b }));
-
-          await this.setTraits({
-            "lamp:R[0]": Math.floor(r),
-            "lamp:G[0]": Math.floor(g),
-            "lamp:B[0]": Math.floor(b),
-          });
+          await debounce(this.updateLight, 300);
 
           callback();
         }
