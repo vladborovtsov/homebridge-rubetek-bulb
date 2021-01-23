@@ -42,6 +42,8 @@ class RubetekBulb implements AccessoryPlugin {
   private sCache = 0;
   private bCache = 0;
 
+  private timerId?: NodeJS.Timeout;
+
   private cacheLastUpdated = new Date(0);
 
   private readonly switchService: Service;
@@ -86,16 +88,23 @@ class RubetekBulb implements AccessoryPlugin {
     );
   }
 
-  async updateLight() {
-    const [r, g, b] = hsvToRgb(this.hCache, this.sCache, 0.5);
+  updateLight() {
+    if (this.timerId) {
+      clearTimeout(this.timerId);
+    }
+    this.timerId = setTimeout(async () => {
+      this.timerId = undefined;
 
-    this.log.debug(JSON.stringify({ r, g, b }));
+      const [r, g, b] = hsvToRgb(this.hCache, this.sCache, 0.5);
 
-    await this.setTraits({
-      "lamp:R[0]": Math.floor(r),
-      "lamp:G[0]": Math.floor(g),
-      "lamp:B[0]": Math.floor(b),
-    });
+      this.log.debug(JSON.stringify({ r, g, b }));
+
+      await this.setTraits({
+        "lamp:R[0]": Math.floor(r),
+        "lamp:G[0]": Math.floor(g),
+        "lamp:B[0]": Math.floor(b),
+      });
+    }, 400);
   }
 
   constructor(log: Logging, config: AccessoryConfig, api: API) {
