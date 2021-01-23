@@ -13,7 +13,7 @@ import {
 
 import subSeconds from "date-fns/subSeconds";
 import convert from "color-convert";
-import { hsvToRgb, rgbToHsv } from "./hsvUtils";
+import { rgbToRgbw, rgbwToRgb } from "./hsvUtils";
 
 import got from "got";
 
@@ -63,11 +63,14 @@ class RubetekBulb implements AccessoryPlugin {
       .find(({ id }) => id.toString(10) === this.houseID)
       .devices.find(({ id }) => id === this.deviceID).currentState;
 
-    const [hue, saturation] = convert.rgb.hsl(
+    const [red, green, blue] = rgbwToRgb(
       traits["lamp:R[0]"] || 0,
       traits["lamp:G[0]"] || 0,
-      traits["lamp:B[0]"] || 0
+      traits["lamp:B[0]"] || 0,
+      traits["lamp:W[0]"] || 0
     );
+
+    const [hue, saturation] = convert.rgb.hsl(red, green, blue);
 
     this.hCache = hue;
     this.sCache = saturation;
@@ -97,12 +100,15 @@ class RubetekBulb implements AccessoryPlugin {
 
       const [r, g, b] = convert.hsl.rgb(this.hCache, this.sCache, 50);
 
+      const [red, green, blue, white] = rgbToRgbw(r, g, b);
+
       this.log.debug(JSON.stringify({ r, g, b }));
 
       await this.setTraits({
-        "lamp:R[0]": Math.floor(r),
-        "lamp:G[0]": Math.floor(g),
-        "lamp:B[0]": Math.floor(b),
+        "lamp:R[0]": Math.floor(red),
+        "lamp:G[0]": Math.floor(green),
+        "lamp:B[0]": Math.floor(blue),
+        "lamp:W[0]": Math.floor(white),
       });
     }, 400);
   }
