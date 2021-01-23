@@ -24,7 +24,7 @@ let hap: HAP;
  */
 export = (api: API) => {
   hap = api.hap;
-  
+
   api.registerAccessory("RubetekBulb", RubetekBulb);
 };
 
@@ -143,10 +143,12 @@ class RubetekBulb implements AccessoryPlugin {
 
           const [r, g, b] = hsvToRgb(this.hCache, this.sCache, 0.5);
 
+          log.debug(JSON.stringify({ r, g, b }));
+
           await this.setTraits({
-            "lamp:R[0]": r,
-            "lamp:G[0]": g,
-            "lamp:B[0]": b,
+            "lamp:R[0]": Math.floor(r),
+            "lamp:G[0]": Math.floor(g),
+            "lamp:B[0]": Math.floor(b),
           });
 
           callback();
@@ -174,10 +176,12 @@ class RubetekBulb implements AccessoryPlugin {
 
           const [r, g, b] = hsvToRgb(this.hCache, this.sCache, 0.5);
 
+          log.debug(JSON.stringify({ r, g, b }));
+
           await this.setTraits({
-            "lamp:R[0]": r,
-            "lamp:G[0]": g,
-            "lamp:B[0]": b,
+            "lamp:R[0]": Math.floor(r),
+            "lamp:G[0]": Math.floor(g),
+            "lamp:B[0]": Math.floor(b),
           });
 
           callback();
