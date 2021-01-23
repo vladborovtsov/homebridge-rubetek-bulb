@@ -162,7 +162,7 @@ class RubetekBulb implements AccessoryPlugin {
         ) => {
           this.hCache = (value as number) / 360;
 
-          await debounce(this.updateLight, 300);
+          this.updateLight();
 
           callback();
         }
@@ -187,7 +187,7 @@ class RubetekBulb implements AccessoryPlugin {
         ) => {
           this.sCache = (value as number) / 100;
 
-          await debounce(this.updateLight, 300);
+          this.updateLight();
 
           callback();
         }
