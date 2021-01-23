@@ -1,7 +1,8 @@
 {
-  "pluginAlias": "ExampleHomebridgePlugin",
-  "pluginType": "platform",
-  "singular": true,
+  "pluginAlias": "RubetekBulb",
+  "pluginType": "accessory",
+  "headerDisplay": "[RPi](https://www.raspberrypi.org) GPIO based LED Strip plugin for [Homebridge](https://github.com/nfarina/homebridge).",
+  "footerDisplay": "Raise [Issues](https://github.com/manfredipist/homebridge-gpio-rgb-ledstrip/issues) or submit [Pull Requests](https://github.com/manfredipist/homebridge-gpio-rgb-ledstrip/pulls) on [Project Page](https://github.com/manfredipist/homebridge-gpio-rgb-ledstrip).",
   "schema": {
     "type": "object",
     "properties": {
@@ -9,8 +10,39 @@
         "title": "Name",
         "type": "string",
         "required": true,
-        "default": "Example Dynamic Platform"
+        "default": "Light",
+        "description": "A unique name for the accessory. It will be used as the accessory name in HomeKit."
+      },
+      "username": {
+        "title": "Username",
+        "type": "string",
+        "required": true,
+        "pattern": "\\+\\d{8,15}",
+        "placeholder": "+78005554522",
+        "description": "Username that you use to log into the Rubetek mobile app (your phone number)"
+      },
+      "password": {
+        "title": "Password",
+        "type": "string",
+        "required": true,
+        "placeholder": "correct-horse-battery-staple",
+        "description": "Password that you use to log into the Rubetek mobile app"
+      },
+      "deviceID": {
+        "title": "Device ID",
+        "type": "string",
+        "required": true,
+        "placeholder": "03aea823-fa3b-4188-9e7d-6d0c0768eb1e",
+        "description": "Device ID. Looks like an UUID. You can find out how to retrieve one in the README"
+      },
+      "houseID": {
+        "title": "House ID",
+        "type": "string",
+        "required": true,
+        "placeholder": "12345",
+        "description": "House ID. Looks like a number. You can find out how to retrieve one in the README"
       }
     }
   }
 }
+
