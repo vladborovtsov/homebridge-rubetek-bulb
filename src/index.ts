@@ -95,7 +95,7 @@ class RubetekBulb implements AccessoryPlugin {
     this.timerId = setTimeout(async () => {
       this.timerId = undefined;
 
-      const [r, g, b] = convert.hsl.rgb(this.hCache, this.sCache, 0.5);
+      const [r, g, b] = convert.hsl.rgb(this.hCache, this.sCache, 50);
 
       this.log.debug(JSON.stringify({ r, g, b }));
 
@@ -151,7 +151,7 @@ class RubetekBulb implements AccessoryPlugin {
           if (this.isCacheExpired()) {
             await this.refreshCache();
           }
-          callback(undefined, this.hCache * 360);
+          callback(undefined, this.hCache);
         }
       )
       .on(
@@ -160,7 +160,7 @@ class RubetekBulb implements AccessoryPlugin {
           value: CharacteristicValue,
           callback: CharacteristicSetCallback
         ) => {
-          this.hCache = (value as number) / 360;
+          this.hCache = value as number;
 
           this.updateLight();
 
@@ -176,7 +176,7 @@ class RubetekBulb implements AccessoryPlugin {
           if (this.isCacheExpired()) {
             await this.refreshCache();
           }
-          callback(undefined, this.sCache * 100);
+          callback(undefined, this.sCache);
         }
       )
       .on(
@@ -185,7 +185,7 @@ class RubetekBulb implements AccessoryPlugin {
           value: CharacteristicValue,
           callback: CharacteristicSetCallback
         ) => {
-          this.sCache = (value as number) / 100;
+          this.sCache = value as number;
 
           this.updateLight();
 
