@@ -4,7 +4,11 @@ Homebridge accessory plugin for Rubetek WiFi lightbulbs. Tested with GU-10 (RL-3
 
 ## Installation
 
-TBD
+Inside your homebridge instance: 
+- `git clone https://github.com/vladborovtsov/homebridge-rubetek-bulb.git`
+- `cd homebridge-rubetek-bulb/`
+- `npm i --also-dev`
+- `npm run build`
 
 ## Setup & Configuation
 
