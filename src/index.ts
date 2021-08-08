@@ -231,7 +231,9 @@ class RubetekBulb implements AccessoryPlugin {
 
     this.informationService = new hap.Service.AccessoryInformation()
       .setCharacteristic(hap.Characteristic.Manufacturer, "Rubetek")
-      .setCharacteristic(hap.Characteristic.Model, "Lighbulb");
+      .setCharacteristic(hap.Characteristic.Model, "RGB Light Bulb")
+      .setCharacteristic(hap.Characteristic.SerialNumber, this.deviceID+"_"+this.houseID);
+
 
     log.info("Switch finished initializing!");
   }
