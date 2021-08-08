@@ -121,7 +121,10 @@ class RubetekBulb implements AccessoryPlugin {
     this.username = config.username as string;
     this.password = config.password as string;
 
-    this.switchService = new hap.Service.Lightbulb(this.name);
+    this.switchService = new hap.Service.Lightbulb(this.name, this.deviceID);
+
+    this.switchService.getCharacteristic(hap.Characteristic.SerialNumber).setValue(this.deviceID+"_"+this.houseID);
+
     this.switchService
       .getCharacteristic(hap.Characteristic.On)
       .on(
