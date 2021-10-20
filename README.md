@@ -9,6 +9,7 @@ Inside your homebridge instance:
 - `cd homebridge-rubetek-bulb/`
 - `npm i --also-dev`
 - `npm run build`
+- `npm install -g`
 
 ## Setup & Configuation
 
